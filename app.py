@@ -71,7 +71,6 @@ std_dev_height = 5.5  # Assuming standard deviation
 st.title('Find Your Dream Partner')
 
 gender = st.selectbox('Gender', ['male', 'female'])
-
 age_group = st.selectbox('Age Group', list(age_groups.keys()))
 education_level = st.selectbox('Education Level', list(education_levels.keys()))
 income_group = st.selectbox('Income Group', list(income_groups.keys()))
@@ -96,10 +95,12 @@ else:
 population_size = age_groups[age_group][1] if gender == 'male' else age_groups[age_group][2]
 
 # Adjust the probability calculation
-probability = (p_age * population_size / total_population) * p_education * p_income * p_exercise * p_body_weight * p_height
+probability = p_age * p_education * p_income * p_exercise * p_body_weight * p_height
 
 # Display the probability
-st.write('Probability:', round(probability, 2))
+st.write('Probability:', round(probability, 4))
+perfect_partners = round(probability * total_population)
+st.write('Estimated number of perfect partners:', perfect_partners)
 
 # Call the function with the calculated probability
 fig = make_plot(probability)
