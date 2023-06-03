@@ -76,10 +76,10 @@ with col1:
     car = st.radio("Have private car or not", ['Yes', 'No', 'Any'], index=2)
     smoke = st.radio("Smoke", ['Yes', 'No', 'Any'], index=2)
     pet = st.radio("Fine to have pet", ['Yes', 'No', 'Any'], index=2)
-    meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
 with col2:
     education = st.selectbox("Education Level", list(education_levels.keys()), index=1)
     income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=3)
+    meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
     drink = st.radio("Drink", ['Yes', 'No', 'Any'], index=2)
