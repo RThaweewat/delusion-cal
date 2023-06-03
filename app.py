@@ -86,6 +86,18 @@ age = st.slider("Select your age", min_value=18, max_value=50)
 # Calculate the proportion of the user-selected age
 p_age = get_age_proportion(age)
 
+# Determine age group based on age
+if age <= 14:
+    age_group = '<14'
+elif age <= 24:
+    age_group = '15-24'
+elif age <= 54:
+    age_group = '25-54'
+elif age <= 64:
+    age_group = '55-64'
+else:
+    age_group = '65+'
+    
 # Then use this p_age in your final probability calculation
 # Height range from 140 to 200 cm
 height = st.slider("Select your height in cm", min_value=140, max_value=200)
