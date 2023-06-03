@@ -38,14 +38,6 @@ def get_age_proportion(age):
     
 total_population = 71600000  # Total population
 
-# Define the options
-age_groups = {
-    '14 years': (0.1605, 5454539, 5151825),
-    '15-24 years': (0.1248, 4221749, 4023668),
-    '25-54 years': (0.4497, 14712579, 15005961),
-    '55-64 years': (0.1344, 4136063, 4748248),
-    '65 years and over': (0.1307, 3745685, 4890158)
-}
 
 education_levels = {
     'Below bachelor degree': 0.305,
@@ -85,18 +77,6 @@ age = st.slider("Select your age", min_value=18, max_value=50)
 
 # Calculate the proportion of the user-selected age
 p_age = get_age_proportion(age)
-
-# Determine age group based on age
-if age <= 14:
-    age_group = '<14'
-elif age <= 24:
-    age_group = '15-24'
-elif age <= 54:
-    age_group = '25-54'
-elif age <= 64:
-    age_group = '55-64'
-else:
-    age_group = '65+'
     
 # Then use this p_age in your final probability calculation
 # Height range from 140 to 200 cm
@@ -118,8 +98,30 @@ if gender == 'male':
 else:
     p_height = stats.norm(mean_height_woman, std_dev_height).pdf(height)
     
-# Retrieve the population size of the selected age group
+# Define age groups
+age_groups = {
+    '<14': (0.1605, 5454539, 5151825),
+    '15-24': (0.1248, 4221749, 4023668),
+    '25-54': (0.4497, 14712579, 15005961),
+    '55-64': (0.1344, 4136063, 4748248),
+    '65+': (0.1307, 3745685, 4890158),
+}
+
+# Determine age group based on age
+if age <= 14:
+    age_group = '<14'
+elif age <= 24:
+    age_group = '15-24'
+elif age <= 54:
+    age_group = '25-54'
+elif age <= 64:
+    age_group = '55-64'
+else:
+    age_group = '65+'
+
+# Get population size for gender and age group
 population_size = age_groups[age_group][1] if gender == 'male' else age_groups[age_group][2]
+
 
 # Adjust the probability calculation
 probability = p_age * p_education * p_income * p_exercise * p_body_weight * p_height
