@@ -33,27 +33,37 @@ fat_ratio = 0.472
 # Begin Streamlit
 st.title("Your Dream Partner Probability Calculator")
 
-# Inputs
-age = st.slider("Age", 18, 50)
-height = st.slider("Height", 140, 240)
-gender = st.radio("Your partner gender", ['men', 'women'])
-exercise = st.radio("Exercise regularly", ['Yes', 'No'])
-overweight = st.radio("Overweight or not", ['Yes', 'No'])
+# Layout columns
+col1, col2 = st.beta_columns(2)
 
-# Calculate based on inputs
-age_bracket = next((value for key, value in age_brackets.items() if str(age) in key), 0)
-education_level = education_levels['Bachelor']  # example
-height_mean = height_dist[gender]
-income_bracket = income_brackets['175k-350k']  # example
-exercise_mult = exercise_ratio if exercise == 'Yes' else 1 - exercise_ratio
-overweight_mult = fat_ratio if overweight == 'Yes' else 1 - fat_ratio
+with col1:
+    # Inputs
+    age = st.slider("Age", 18, 50)
+    height = st.slider("Height", 140, 240)
+    gender = st.radio("Your partner gender", ['men', 'women'])
+    
+with col2:
+    education = st.selectbox("Education Level", list(education_levels.keys()))
+    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()))
+    exercise = st.radio("Exercise regularly", ['Yes', 'No'])
+    overweight = st.radio("Overweight or not", ['Yes', 'No'])
 
-# Combine all factors
-probability = age_bracket * education_level * income_bracket * exercise_mult * overweight_mult
+# Button
+if st.button('Calculate'):
+    # Calculate based on inputs
+    age_bracket = next((value for key, value in age_brackets.items() if str(age) in key), 0)
+    education_level = education_levels[education]
+    height_mean = height_dist[gender]
+    income_bracket = income_brackets[income]
+    exercise_mult = exercise_ratio if exercise == 'Yes' else 1 - exercise_ratio
+    overweight_mult = fat_ratio if overweight == 'Yes' else 1 - fat_ratio
 
-# Calculate the number of people this represents
-num_people = population * probability
+    # Combine all factors
+    probability = age_bracket * education_level * income_bracket * exercise_mult * overweight_mult
 
-# Display the results
-st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
-st.write(f"Number of your dream partners in Thailand: {num_people:.0f}")
+    # Calculate the number of people this represents
+    num_people = population * probability
+
+    # Display the results
+    st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
+    st.write(f"Number of your dream partners in Thailand: {num_people:.0f}")
