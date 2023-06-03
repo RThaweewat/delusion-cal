@@ -1,4 +1,5 @@
 import streamlit as st
+from scipy.stats import norm
 
 # Define data
 population = 71.6 * 10**6  # Total population
