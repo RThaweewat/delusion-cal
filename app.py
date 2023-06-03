@@ -111,7 +111,7 @@ with col1:
     virgin = st.radio("Still a virgin", ['Yes', 'No', 'Any'], index=2)
 with col2:
     education = st.selectbox("Education Level", list(education_levels.keys()), index=3)
-    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=4)
+    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=5)
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
     religion = st.selectbox("Prefered Religion", list(religion_options.keys()), index=len(religion_options)-1)
