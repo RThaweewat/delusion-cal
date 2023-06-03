@@ -33,6 +33,7 @@ education_levels = {
     'Below Bachelor': 0.305,
     'Bachelor': 0.634,
     'Above Bachelor': 0.07,
+    'Any': 1
 }
 
 income_brackets = {
@@ -41,6 +42,7 @@ income_brackets = {
     '350k-525k': 0.22,
     '525k-875k': 0.13,
     '>875k': 0.06,
+    'Any': 1
 }
 exercise_ratio = 0.261
 fat_ratio = 0.472
@@ -108,8 +110,8 @@ with col1:
     pet = st.radio("Fine to have pet", ['Yes', 'No', 'Any'], index=2)
     virgin = st.radio("Still a virgin", ['Yes', 'No', 'Any'], index=2)
 with col2:
-    education = st.selectbox("Education Level", list(education_levels.keys()), index=1)
-    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=3)
+    education = st.selectbox("Education Level", list(education_levels.keys()), index=3)
+    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=4)
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
     religion = st.selectbox("Prefered Religion", list(religion_options.keys()), index=len(religion_options)-1)
