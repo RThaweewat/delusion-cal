@@ -60,6 +60,26 @@ meet_options = {
     'Through Family': 0.07,
     'Any': 1
 }
+# MBTI types and their percentages
+mbti_types = {
+    'INTJ': 0.021,
+    'INTP': 0.033,
+    'ENTJ': 0.018,
+    'ENTP': 0.032,
+    'INFJ': 0.015,
+    'INFP': 0.044,
+    'ENFJ': 0.025,
+    'ENFP': 0.081,
+    'ISTJ': 0.116,
+    'ISFJ': 0.138,
+    'ESTJ': 0.087,
+    'ESFJ': 0.12,
+    'ISTP': 0.054,
+    'ISFP': 0.088,
+    'ESTP': 0.043,
+    'ESFP': 0.085,
+    'Any': 1
+}
 
 # Begin Streamlit
 st.title("Dream Partner Probability Calculator")
@@ -75,16 +95,18 @@ with col1:
     gender = st.radio("Your partner gender", ['men', 'women'], index=0)
     car = st.radio("Have private car or not", ['Yes', 'No', 'Any'], index=2)
     smoke = st.radio("Smoke", ['Yes', 'No', 'Any'], index=2)
+    drink = st.radio("Drink", ['Yes', 'No', 'Any'], index=2)
     pet = st.radio("Fine to have pet", ['Yes', 'No', 'Any'], index=2)
+    virgin = st.radio("Still a virgin", ['Yes', 'No', 'Any'], index=2)
 with col2:
     education = st.selectbox("Education Level", list(education_levels.keys()), index=1)
     income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=3)
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
+    mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
-    drink = st.radio("Drink", ['Yes', 'No', 'Any'], index=2)
-    virgin = st.radio("Still a virgin", ['Yes', 'No', 'Any'], index=2)
-
+    
+    
 # Button
 # Button
 if st.button('Calculate'):
@@ -105,7 +127,8 @@ if st.button('Calculate'):
     drink_mult = drink_ratio if drink == 'Yes' else (1 - drink_ratio if drink == 'No' else 1)
     pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
     meet_prob = meet_options[meet_choice]
-
+    mbti_mult = mbti_types[mbti]
+    
     # Virginity probability
     virginity_probs = {'men': male_vrigin/100, 'women': female_virgin/100}
     if virgin == 'Yes':
@@ -116,7 +139,7 @@ if st.button('Calculate'):
         virgin_prob = 1
 
     # Combine all factors
-    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob
+    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob * mbti_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
