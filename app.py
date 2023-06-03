@@ -101,5 +101,4 @@ if st.button('Calculate'):
     st.markdown(small_grey_text + 'Chances you meet your dream partner (Avg. 20 strangers meet daily)' + '</p>', unsafe_allow_html=True)
     st.markdown(red_bold_text + f'{probability * 100 * 20:.4f}%' + '</p>', unsafe_allow_html=True)
     st.markdown(small_grey_text + 'Total number of your dream partners:' + '</p>', unsafe_allow_html=True)
-    st.markdown(red_bold_text + f'{total_dream_partners}' + '</p>', unsafe_allow_html=True)
-
+    st.markdown(red_bold_text + f'{num_people}' + '</p>', unsafe_allow_html=True)
