@@ -53,7 +53,7 @@ with col2:
 # Button
 if st.button('Calculate'):
     # Calculate based on inputs
-    age_bracket = next((value for key, value in age_brackets.items() if str(age) in key), 0)
+    age_bracket = next((value for key, value in age_brackets.items() if int(key.split('-')[0]) <= age <= int(key.split('-')[-1])), 0)
     education_level = education_levels[education]
     height_mean = height_dist[gender]
     income_bracket = income_brackets[income]
@@ -62,11 +62,10 @@ if st.button('Calculate'):
     car_mult = car_ratio if car == 'Yes' else 1 - car_ratio
 
     # Calculate age and height probabilities
-    age_ratio = age_bracket 
-    height_prob = norm.cdf(height + 0.5, loc=height_mean, scale=height_std) - norm.cdf(height - 0.5, loc=height_mean, scale=height_std)
+    height_prob = norm.pdf(height, loc=height_mean, scale=height_std) # Use Probability Density Function for height
 
     # Combine all factors
-    probability = age_ratio * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult
+    probability = age_bracket * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
