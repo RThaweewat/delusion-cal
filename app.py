@@ -4,6 +4,7 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 
 def make_plot(probability):
+    fig, ax = plt.subplots()
     grid = np.zeros((10, 10))
     num_red_boxes = round(probability * 100)  # Calculate number of red boxes
     red_boxes_indices = np.random.choice(100, num_red_boxes, replace=False)  # Randomly select indices for red boxes
@@ -16,15 +17,18 @@ def make_plot(probability):
 
     # Create a color map: 0 for white boxes and 1 for red boxes
     cmap = plt.cm.colors.ListedColormap(['white', 'red'])
-    plt.imshow(grid, cmap=cmap)
+    ax.imshow(grid, cmap=cmap)
 
     # Hide the grid lines
-    plt.grid(False)
+    ax.grid(False)
 
     # Hide the axes
-    plt.axis('off')
+    ax.axis('off')
 
-    plt.show()
+    return fig
+
+    
+total_population = 71600000  # Total population
 
 # Define the options
 age_groups = {
@@ -87,12 +91,16 @@ if gender == 'male':
     p_height = stats.norm(mean_height_man, std_dev_height).pdf(height)
 else:
     p_height = stats.norm(mean_height_woman, std_dev_height).pdf(height)
+    
+# Retrieve the population size of the selected age group
+population_size = age_groups[age_group][1] if gender == 'male' else age_groups[age_group][2]
 
-probability = p_age * p_education * p_income * p_exercise * p_body_weight * p_height
+# Adjust the probability calculation
+probability = (p_age * population_size / total_population) * p_education * p_income * p_exercise * p_body_weight * p_height
 
 # Display the probability
 st.write('Probability:', round(probability, 2))
 
 # Call the function with the calculated probability
-make_plot(probability)
-st.pyplot()
+fig = make_plot(probability)
+st.pyplot(fig)
