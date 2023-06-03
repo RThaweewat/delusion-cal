@@ -93,17 +93,5 @@ if st.button('Calculate'):
     num_people = population * probability
 
     # Display the results
-    st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
-    st.write(f"Number of your dream partners in Thailand: {int(num_people):,}")
-
-
-    # Display the results
-    st.write(f"overweight_multChances: {overweight_mult*100:.2f}%")
-    st.write(f"car_multChances: {car_mult*100:.2f}%")
-    st.write(f"income_bracket Chances: {income_bracket*100:.2f}%")
-    st.write(f"education Chances: {education_level*100:.2f}%")
-    st.write(f"height Chances: {height_prob*100:.2f}%")
-    st.write(f"age Chances: {age_prob*100:.2f}%")
-    st.write(f"exercise_mult: {exercise_mult*100:.2f}%")
-    st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
-    st.write(f"Number of your dream partners in Thailand: {num_people:.0f}")
+    st.write(f"Chances you meet your dream partner: {probability*100:.4f}%")
+    st.write(f"Total number of your dream partners: {int(num_people):,}")
