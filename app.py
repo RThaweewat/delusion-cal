@@ -50,7 +50,7 @@ education_level = st.selectbox('Education Level', list(education_levels.keys()))
 income_group = st.selectbox('Income Group', list(income_groups.keys()))
 exercise_habit = st.selectbox('Exercise Habit', list(exercise_habits.keys()))
 body_weight = st.selectbox('Body Weight', list(body_weights.keys()))
-
+height = st.number_input('Height (in cm)', min_value=100, max_value=250)
 total_population = sum(val[1] if gender == 'male' else val[2] for val in age_groups.values())
 
 p_age = age_groups[age_group][0]
