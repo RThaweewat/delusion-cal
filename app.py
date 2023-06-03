@@ -62,7 +62,7 @@ if st.button('Calculate'):
     car_mult = car_ratio if car == 'Yes' else 1 - car_ratio
 
     # Calculate age and height probabilities
-    age_ratio = age_bracket / sum([v for k, v in age_brackets.items() if str(age) in k])
+    age_ratio = age_bracket 
     height_prob = norm.cdf(height + 0.5, loc=height_mean, scale=height_std) - norm.cdf(height - 0.5, loc=height_mean, scale=height_std)
 
     # Combine all factors
