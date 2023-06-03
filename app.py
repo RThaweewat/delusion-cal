@@ -116,7 +116,7 @@ with col2:
     income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=5)
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
-    religion = st.selectbox("Prefered Religion", list(religion_options.keys()), index=len(religion_options)-1)
+    religion = st.selectbox("Preferred Religion", list(religion_options.keys()), index=len(religion_options)-1)
     tiktok = st.radio("Have Tiktok Account", ['Yes', 'No', 'Any'], index=2)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
