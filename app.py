@@ -94,7 +94,7 @@ if st.button('Calculate'):
 
     # Display the results
     # Define color and text styles
-    red_bold_text = '<p style="color:Blue; font-size: 20px; font-weight: bold">'
+    red_bold_text = '<p style="color:#F79327; font-size: 20px; font-weight: bold">'
     small_grey_text = '<p style="color:Grey; font-size: 15px">'
 
     # Use Streamlit's markdown function to display the styled text
