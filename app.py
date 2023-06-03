@@ -62,7 +62,27 @@ body_weights = {
     'Fat': 0.472,
     'Not fat': 0.528
 }
+# Define age groups
+age_groups = {
+    '<14': (0.1605, 5454539, 5151825),
+    '15-24': (0.1248, 4221749, 4023668),
+    '25-54': (0.4497, 14712579, 15005961),
+    '55-64': (0.1344, 4136063, 4748248),
+    '65+': (0.1307, 3745685, 4890158),
+}
 
+# Determine age group based on age
+if age <= 14:
+    age_group = '<14'
+elif age <= 24:
+    age_group = '15-24'
+elif age <= 54:
+    age_group = '25-54'
+elif age <= 64:
+    age_group = '55-64'
+else:
+    age_group = '65+'
+ 
 # Define mean and standard deviation for height
 mean_height_woman = 160
 mean_height_man = 170
@@ -98,26 +118,7 @@ if gender == 'male':
 else:
     p_height = stats.norm(mean_height_woman, std_dev_height).pdf(height)
     
-# Define age groups
-age_groups = {
-    '<14': (0.1605, 5454539, 5151825),
-    '15-24': (0.1248, 4221749, 4023668),
-    '25-54': (0.4497, 14712579, 15005961),
-    '55-64': (0.1344, 4136063, 4748248),
-    '65+': (0.1307, 3745685, 4890158),
-}
 
-# Determine age group based on age
-if age <= 14:
-    age_group = '<14'
-elif age <= 24:
-    age_group = '15-24'
-elif age <= 54:
-    age_group = '25-54'
-elif age <= 64:
-    age_group = '55-64'
-else:
-    age_group = '65+'
 
 # Get population size for gender and age group
 population_size = age_groups[age_group][1] if gender == 'male' else age_groups[age_group][2]
