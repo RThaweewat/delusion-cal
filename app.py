@@ -19,7 +19,7 @@ height_dist = {
     'women': 160,
     'men': 170,
 }
-height_std = 5.5
+height_std = 10
 income_brackets = {
     '<175k': 0.19,
     '175k-350k': 0.40,
