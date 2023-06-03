@@ -30,6 +30,9 @@ income_brackets = {
 exercise_ratio = 0.261
 fat_ratio = 0.472
 car_ratio = 0.227
+smoke_ratio = 0.191
+drink_ratio = 0.28
+pet_ratio = 0.49
 
 # Begin Streamlit
 st.title("Your Dream Partner Probability Calculator")
@@ -40,15 +43,18 @@ col1, col2 = st.columns(2)
 with col1:
     # Inputs
     age = st.slider("Age", 18, 50)
-    height = st.slider("Height", 140, 240)
+    min_height = st.slider("Min Height", 140, 240)
     gender = st.radio("Your partner gender", ['men', 'women'])
-    car = st.radio("Have private car or not", ['Yes', 'No'])
-    
+    car = st.radio("Have private car or not", ['Yes', 'No', 'Any'])
+    smoke = st.radio("Smoke", ['Yes', 'No', 'Any'])
+    pet = st.radio("Fine to have pet", ['Yes', 'No', 'Any'])
+
 with col2:
     education = st.selectbox("Education Level", list(education_levels.keys()))
     income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()))
-    exercise = st.radio("Exercise regularly", ['Yes', 'No'])
-    overweight = st.radio("Overweight or not", ['Yes', 'No'])
+    exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'])
+    overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'])
+    drink = st.radio("Drink", ['Yes', 'No', 'Any'])
 
 # Button
 if st.button('Calculate'):
@@ -57,18 +63,26 @@ if st.button('Calculate'):
     education_level = education_levels[education]
     height_mean = height_dist[gender]
     income_bracket = income_brackets[income]
-    exercise_mult = exercise_ratio if exercise == 'Yes' else 1 - exercise_ratio
-    overweight_mult = fat_ratio if overweight == 'Yes' else 1 - fat_ratio
-    car_mult = car_ratio if car == 'Yes' else 1 - car_ratio
+    exercise_mult = exercise_ratio if exercise == 'Yes' else (1 - exercise_ratio if exercise == 'No' else 1)
+    overweight_mult = fat_ratio if overweight == 'Yes' else (1 - fat_ratio if overweight == 'No' else 1)
+    car_mult = car_ratio if car == 'Yes' else (1 - car_ratio if car == 'No' else 1)
+    smoke_mult = smoke_ratio if smoke == 'Yes' else (1 - smoke_ratio if smoke == 'No' else 1)
+    drink_mult = drink_ratio if drink == 'Yes' else (1 - drink_ratio if drink == 'No' else 1)
+    pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
 
-    # Calculate age and height probabilities
-    height_prob = norm.pdf(height, loc=height_mean, scale=height_std) # Use Probability Density Function for height
+    # Calculate height probabilities
+    height_prob = 1 - norm.cdf(min_height, loc=height_mean, scale=height_std)
 
     # Combine all factors
-    probability = age_bracket * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult
+    probability = age_bracket * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
+
+    # Display the results
+    st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
+    st.write(f"Number of your dream partners in Thailand: {int(num_people):,}")
+
 
     # Display the results
     st.write(f"overweight_multChances: {overweight_mult*100:.2f}%")
