@@ -34,7 +34,7 @@ fat_ratio = 0.472
 st.title("Your Dream Partner Probability Calculator")
 
 # Layout columns
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 
 with col1:
     # Inputs
