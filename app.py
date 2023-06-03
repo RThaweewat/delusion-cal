@@ -93,5 +93,13 @@ if st.button('Calculate'):
     num_people = population * probability
 
     # Display the results
-    st.write(f"Chances you meet your dream partner (Avg. 20 strangers meet daily): {probability*100*20:.4f}%")
-    st.write(f"Total number of your dream partners: {int(num_people):,}")
+    # Define color and text styles
+    red_bold_text = '<p style="color:Red; font-size: 20px; font-weight: bold">'
+    small_grey_text = '<p style="color:Grey; font-size: 15px">'
+
+    # Use Streamlit's markdown function to display the styled text
+    st.markdown(small_grey_text + 'Chances you meet your dream partner (Avg. 20 strangers meet daily)' + '</p>', unsafe_allow_html=True)
+    st.markdown(red_bold_text + f'{probability * 100 * 20:.4f}%' + '</p>', unsafe_allow_html=True)
+    st.markdown(small_grey_text + 'Total number of your dream partners:' + '</p>', unsafe_allow_html=True)
+    st.markdown(red_bold_text + f'{total_dream_partners}' + '</p>', unsafe_allow_html=True)
+
