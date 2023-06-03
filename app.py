@@ -93,5 +93,5 @@ if st.button('Calculate'):
     num_people = population * probability
 
     # Display the results
-    st.write(f"Chances you meet your dream partner: {probability*100:.4f}%")
+    st.write(f"Chances you meet your dream partner (Avg. 20 strangers meet daily"): {probability*100*20:.4f}%")
     st.write(f"Total number of your dream partners: {int(num_people):,}")
