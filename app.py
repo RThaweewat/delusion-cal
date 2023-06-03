@@ -60,6 +60,15 @@ meet_options = {
     'Through Family': 0.07,
     'Any': 1
 }
+
+religion_options = {
+    'Buddhism': 0.935,
+    'Islam': 0.054,
+    'Christianity': 0.011,
+    'Others': 0.01,
+    'Any': 1
+}
+
 # MBTI types and their percentages
 mbti_types = {
     'INTJ': 0.021,
@@ -103,6 +112,7 @@ with col2:
     income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=3)
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
+    religion = st.selectbox("Prefered Religion", list(religion_options.keys()), index=len(religion_options)-1)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
     
@@ -128,6 +138,7 @@ if st.button('Calculate'):
     pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
     meet_prob = meet_options[meet_choice]
     mbti_mult = mbti_types[mbti]
+    religion_mult = religion_options[religion]
     
     # Virginity probability
     virginity_probs = {'men': male_vrigin/100, 'women': female_virgin/100}
@@ -139,7 +150,7 @@ if st.button('Calculate'):
         virgin_prob = 1
 
     # Combine all factors
-    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob * mbti_mult
+    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob * mbti_mult * religion_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
