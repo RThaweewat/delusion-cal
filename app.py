@@ -20,6 +20,30 @@ age_distribution = {
     },
 }
 
+education_levels = {
+    'Below Bachelor': 0.305,
+    'Bachelor': 0.634,
+    'Above Bachelor': 0.07,
+}
+height_dist = {
+    'women': 160,
+    'men': 170,
+}
+height_std = 5.5
+income_brackets = {
+    '<175k': 0.19,
+    '175k-350k': 0.40,
+    '350k-525k': 0.22,
+    '525k-875k': 0.13,
+    '>875k': 0.06,
+}
+
+exercise_ratio = 0.261
+fat_ratio = 0.472
+car_ratio = 0.227
+smoke_ratio = 0.191
+drink_ratio = 0.28
+pet_ratio = 0.49
 # other data remain the same ...
 
 # Begin Streamlit
@@ -62,7 +86,7 @@ if st.button('Calculate'):
     height_prob = 1 - norm.cdf(min_height, loc=height_mean, scale=height_std)
 
     # Combine all factors
-    probability = age_bracket * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult
+    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
@@ -78,7 +102,7 @@ if st.button('Calculate'):
     st.write(f"income_bracket Chances: {income_bracket*100:.2f}%")
     st.write(f"education Chances: {education_level*100:.2f}%")
     st.write(f"height Chances: {height_prob*100:.2f}%")
-    st.write(f"age Chances: {age_bracket*100:.2f}%")
+    st.write(f"age Chances: {age_prob*100:.2f}%")
     st.write(f"exercise_mult: {exercise_mult*100:.2f}%")
     st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
     st.write(f"Number of your dream partners in Thailand: {num_people:.0f}")
