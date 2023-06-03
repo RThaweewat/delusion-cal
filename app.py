@@ -63,7 +63,7 @@ if st.button('Calculate'):
 
     # Calculate age and height probabilities
     age_ratio = age_bracket / sum([v for k, v in age_brackets.items() if str(age) in k])
-    height_prob = norm.cdf(height + 0.5, loc=height_mean, scale=height_std) - norm.cdf(height - 0.5,
+    height_prob = norm.cdf(height + 0.5, loc=height_mean, scale=height_std) - norm.cdf(height - 0.5, loc=height_mean, scale=height_std)
 
     # Combine all factors
     probability = age_ratio * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult
