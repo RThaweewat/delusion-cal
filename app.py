@@ -1,5 +1,9 @@
 import streamlit as st
 from scipy.stats import norm
+import logging
+
+# Set up logging
+logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # Define data
 population = 71.6 * 10**6  # Total population
@@ -75,6 +79,7 @@ with col2:
 # Button
 if st.button('Calculate'):
     # Calculate based on inputs
+    logging.info(f'User inputs - Gender: {gender}, Age Range: {age_range}, Height Range: {height_range}, Education: {education}, Income: {income}, Virgin: {virgin}')
     age_prob = sum(v for k, v in age_distribution[gender].items() if age_range[0] <= k <= age_range[1])
 
     # Calculating height probability for range
