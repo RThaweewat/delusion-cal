@@ -3,7 +3,10 @@ from scipy.stats import norm
 
 # Define data
 population = 71.6 * 10**6  # Total population
+height_mean = {'men': 170, 'women': 160}
+height_std = 5.5
 
+# Define age distribution for men and women
 age_distribution = {
     'men': {
         18: 0.0132, 19: 0.0128, 20: 0.0128, 21: 0.0129, 22: 0.0135, 23: 0.0135, 24: 0.0144,
@@ -21,31 +24,7 @@ age_distribution = {
     },
 }
 
-education_levels = {
-    'Below Bachelor': 0.305,
-    'Bachelor': 0.634,
-    'Above Bachelor': 0.07,
-}
-height_dist = {
-    'women': 160,
-    'men': 170,
-}
-height_std = 5.5
-income_brackets = {
-    '<175k': 0.19,
-    '175k-350k': 0.40,
-    '350k-525k': 0.22,
-    '525k-875k': 0.13,
-    '>875k': 0.06,
-}
-
-exercise_ratio = 0.261
-fat_ratio = 0.472
-car_ratio = 0.227
-smoke_ratio = 0.191
-drink_ratio = 0.28
-pet_ratio = 0.49
-# other data remain the same ...
+# Other data definitions remain same...
 
 # Begin Streamlit
 st.title("Your Dream Partner Probability Calculator")
@@ -55,26 +34,31 @@ col1, col2 = st.columns(2)
 
 with col1:
     # Inputs
-    age_range = st.slider("Age Range", 18, 50, (20, 30))
-    min_height = st.slider("Min Height", 140, 240)
-    gender = st.radio("Your partner gender", ['men', 'women'])
+    age_range = st.slider("Age Range", 18, 50, (24, 30))
+    height_range = st.slider("Height Range (cm)", 140, 240, (170, 180))
+    gender = st.radio("Your partner gender", ['men', 'women'], index=0)
     car = st.radio("Have private car or not", ['Yes', 'No', 'Any'])
     smoke = st.radio("Smoke", ['Yes', 'No', 'Any'])
     pet = st.radio("Fine to have pet", ['Yes', 'No', 'Any'])
 
 with col2:
-    education = st.selectbox("Education Level", list(education_levels.keys()))
-    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()))
+    education = st.selectbox("Education Level", list(education_levels.keys()), index=1)
+    income = st.selectbox("Annual Income (in baht)", list(income_brackets.keys()), index=3)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'])
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'])
     drink = st.radio("Drink", ['Yes', 'No', 'Any'])
 
 # Button
+# Button
 if st.button('Calculate'):
     # Calculate based on inputs
     age_prob = sum(v for k, v in age_distribution[gender].items() if age_range[0] <= k <= age_range[1])
+
+    # Calculating height probability for range
+    height_low_prob = norm.cdf(height_range[0], loc=height_mean[gender], scale=height_std)
+    height_high_prob = norm.cdf(height_range[1], loc=height_mean[gender], scale=height_std)
+    height_prob = height_high_prob - height_low_prob
     education_level = education_levels[education]
-    height_mean = height_dist[gender]
     income_bracket = income_brackets[income]
     exercise_mult = exercise_ratio if exercise == 'Yes' else (1 - exercise_ratio if exercise == 'No' else 1)
     overweight_mult = fat_ratio if overweight == 'Yes' else (1 - fat_ratio if overweight == 'No' else 1)
@@ -82,9 +66,6 @@ if st.button('Calculate'):
     smoke_mult = smoke_ratio if smoke == 'Yes' else (1 - smoke_ratio if smoke == 'No' else 1)
     drink_mult = drink_ratio if drink == 'Yes' else (1 - drink_ratio if drink == 'No' else 1)
     pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
-
-    # Calculate height probabilities
-    height_prob = 1 - norm.cdf(min_height, loc=height_mean, scale=height_std)
 
     # Combine all factors
     probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult
