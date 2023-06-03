@@ -24,10 +24,29 @@ age_distribution = {
     },
 }
 
-# Other data definitions remain same...
+
+education_levels = {
+    'Below Bachelor': 0.305,
+    'Bachelor': 0.634,
+    'Above Bachelor': 0.07,
+}
+
+income_brackets = {
+    '<175k': 0.19,
+    '175k-350k': 0.40,
+    '350k-525k': 0.22,
+    '525k-875k': 0.13,
+    '>875k': 0.06,
+}
+exercise_ratio = 0.261
+fat_ratio = 0.472
+car_ratio = 0.227
+smoke_ratio = 0.191
+drink_ratio = 0.28
+pet_ratio = 0.49
 
 # Begin Streamlit
-st.title("Your Dream Partner Probability Calculator")
+st.title("Dream Partner Probability Calculator")
 
 # Layout columns
 col1, col2 = st.columns(2)
