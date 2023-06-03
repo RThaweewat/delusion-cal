@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+from scipy.stats import norm
 
 # Define data
 population = 71.6 * 10**6  # Total population
@@ -58,8 +59,12 @@ if st.button('Calculate'):
     exercise_mult = exercise_ratio if exercise == 'Yes' else 1 - exercise_ratio
     overweight_mult = fat_ratio if overweight == 'Yes' else 1 - fat_ratio
 
+    # Calculate age and height probabilities
+    age_ratio = age_bracket / ((age - 14) if age < 25 else 10)  # estimated ratio based on age bracket
+    height_prob = norm.cdf(height, loc=height_mean, scale=height_std)  # probability based on normal distribution
+
     # Combine all factors
-    probability = age_bracket * education_level * income_bracket * exercise_mult * overweight_mult
+    probability = age_ratio * height_prob * education_level * income_bracket * exercise_mult * overweight_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
