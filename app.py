@@ -4,15 +4,15 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 
 def make_plot(probability):
-    fig, ax = plt.subplots()
-    grid = np.zeros((10, 10))
-    num_red_boxes = round(probability * 100)  # Calculate number of red boxes
-    red_boxes_indices = np.random.choice(100, num_red_boxes, replace=False)  # Randomly select indices for red boxes
+    fig, ax = plt.subplots(figsize=(8, 8))  # Add a size for the figure to make it larger
+    grid = np.zeros((100, 100))  # Adjust the grid size to 100x100
+    num_red_boxes = round(probability * 10000)  # Calculate number of red boxes based on the new grid size
+    red_boxes_indices = np.random.choice(10000, num_red_boxes, replace=False)  # Randomly select indices for red boxes
 
     # Change the color of selected boxes to red
     for index in red_boxes_indices:
-        row = index // 10
-        col = index % 10
+        row = index // 100  # Adjust this line for the new grid size
+        col = index % 100  # Adjust this line for the new grid size
         grid[row][col] = 1
 
     # Create a color map: 0 for white boxes and 1 for red boxes
@@ -26,6 +26,7 @@ def make_plot(probability):
     ax.axis('off')
 
     return fig
+
 
     
 total_population = 71600000  # Total population
