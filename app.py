@@ -27,6 +27,13 @@ def make_plot(probability):
 
     return fig
 
+def get_age_proportion(age):
+    if 18 <= age <= 24:
+        return (12.48 / 10) * (24 - age + 1)
+    elif 25 <= age <= 50:
+        return (44.97 / 30) * (50 - age + 1)
+    else:
+        return 0
 
     
 total_population = 71600000  # Total population
@@ -73,7 +80,13 @@ st.title('Find Your Dream Partner')
 
 gender = st.selectbox('Gender', ['male', 'female'])
 # Age range from 18 to 50 years
+# User selects their age
 age = st.slider("Select your age", min_value=18, max_value=50)
+
+# Calculate the proportion of the user-selected age
+p_age = get_age_proportion(age)
+
+# Then use this p_age in your final probability calculation
 # Height range from 140 to 200 cm
 height = st.slider("Select your height in cm", min_value=140, max_value=200)
 education_level = st.selectbox('Education Level', list(education_levels.keys()))
@@ -82,7 +95,6 @@ exercise_habit = st.selectbox('Exercise Habit', list(exercise_habits.keys()))
 body_weight = st.selectbox('Body Weight', list(body_weights.keys()))
 total_population = sum(val[1] if gender == 'male' else val[2] for val in age_groups.values())
 
-p_age = age_groups[age_group][0]
 p_education = education_levels[education_level]
 p_income = income_groups[income_group]
 p_exercise = exercise_habits[exercise_habit]
