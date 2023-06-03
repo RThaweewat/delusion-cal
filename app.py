@@ -47,6 +47,7 @@ pet_ratio = 0.49
 
 # Begin Streamlit
 st.title("Dream Partner Probability Calculator")
+st.subheader("aka Delusion Calculator (TH Edition)")
 
 # Layout columns
 col1, col2 = st.columns(2)
@@ -100,5 +101,5 @@ if st.button('Calculate'):
     # Use Streamlit's markdown function to display the styled text
     st.markdown(small_grey_text + 'Chances you meet your partner (Avg. 20 strangers/day)' + '</p>', unsafe_allow_html=True)
     st.markdown(red_bold_text + f'{probability * 100 * 20:.4f}%' + '</p>', unsafe_allow_html=True)
-    st.markdown(small_grey_text + 'Total number of your dream partners:' + '</p>', unsafe_allow_html=True)
+    st.markdown(small_grey_text + 'Total number of partners in Thailand:' + '</p>', unsafe_allow_html=True)
     st.markdown(red_bold_text + f'{int(num_people)}' + '</p>', unsafe_allow_html=True)
