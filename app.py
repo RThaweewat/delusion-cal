@@ -72,12 +72,14 @@ std_dev_height = 5.5  # Assuming standard deviation
 st.title('Find Your Dream Partner')
 
 gender = st.selectbox('Gender', ['male', 'female'])
-age_group = st.selectbox('Age Group', list(age_groups.keys()))
+# Age range from 18 to 50 years
+age = st.slider("Select your age", min_value=18, max_value=50)
+# Height range from 140 to 200 cm
+height = st.slider("Select your height in cm", min_value=140, max_value=200)
 education_level = st.selectbox('Education Level', list(education_levels.keys()))
 income_group = st.selectbox('Income Group', list(income_groups.keys()))
 exercise_habit = st.selectbox('Exercise Habit', list(exercise_habits.keys()))
 body_weight = st.selectbox('Body Weight', list(body_weights.keys()))
-height = st.number_input('Height (in cm)', min_value=100, max_value=250)
 total_population = sum(val[1] if gender == 'male' else val[2] for val in age_groups.values())
 
 p_age = age_groups[age_group][0]
