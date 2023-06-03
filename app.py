@@ -44,6 +44,8 @@ car_ratio = 0.227
 smoke_ratio = 0.191
 drink_ratio = 0.28
 pet_ratio = 0.49
+male_vrigin = 14.3
+female_virgin = 12.3
 
 # Begin Streamlit
 st.title("Dream Partner Probability Calculator")
@@ -67,6 +69,7 @@ with col2:
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
     drink = st.radio("Drink", ['Yes', 'No', 'Any'], index=2)
+    virgin = st.radio("Still a virgin", ['Yes', 'No', 'Any'], index=2)
 
 # Button
 # Button
@@ -87,8 +90,17 @@ if st.button('Calculate'):
     drink_mult = drink_ratio if drink == 'Yes' else (1 - drink_ratio if drink == 'No' else 1)
     pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
 
+    # Virginity probability
+    virginity_probs = {'men': male_vrigin/100, 'women': female_virgin/100}
+    if virgin == 'Yes':
+        virgin_prob = virginity_probs[gender]
+    elif virgin == 'No':
+        virgin_prob = 1 - virginity_probs[gender]
+    else:  # 'Any'
+        virgin_prob = 1
+
     # Combine all factors
-    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult
+    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob
 
     # Calculate the number of people this represents
     num_people = population * probability
