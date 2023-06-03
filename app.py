@@ -1,6 +1,4 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
 from scipy.stats import norm
 
 # Define data
@@ -31,6 +29,7 @@ income_brackets = {
 }
 exercise_ratio = 0.261
 fat_ratio = 0.472
+car_ratio = 0.227
 
 # Begin Streamlit
 st.title("Your Dream Partner Probability Calculator")
@@ -43,6 +42,7 @@ with col1:
     age = st.slider("Age", 18, 50)
     height = st.slider("Height", 140, 240)
     gender = st.radio("Your partner gender", ['men', 'women'])
+    car = st.radio("Have private car or not", ['Yes', 'No'])
     
 with col2:
     education = st.selectbox("Education Level", list(education_levels.keys()))
@@ -59,17 +59,18 @@ if st.button('Calculate'):
     income_bracket = income_brackets[income]
     exercise_mult = exercise_ratio if exercise == 'Yes' else 1 - exercise_ratio
     overweight_mult = fat_ratio if overweight == 'Yes' else 1 - fat_ratio
+    car_mult = car_ratio if car == 'Yes' else 1 - car_ratio
 
     # Calculate age and height probabilities
-    age_ratio = age_bracket / ((age - 14) if age < 25 else 10)  # estimated ratio based on age bracket
-    height_prob = norm.cdf(height, loc=height_mean, scale=height_std)  # probability based on normal distribution
+    age_ratio = age_bracket / sum([v for k, v in age_brackets.items() if str(age) in k])
+    height_prob = norm.cdf(height + 0.5, loc=height_mean, scale=height_std) - norm.cdf(height - 0.5,
 
     # Combine all factors
-    probability = age_ratio * height_prob * education_level * income_bracket * exercise_mult * overweight_mult
+    probability = age_ratio * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
 
     # Display the results
-    st.write(f"Chances you meet your dream partner: {probability*100:.4f}%")
-    st.write(f"Number of your dream partners in Thailand: {num_people:.4f}")
+    st.write(f"Chances you meet your dream partner: {probability*100:.2f}%")
+    st.write(f"Number of your dream partners in Thailand: {num_people:.0f}")
