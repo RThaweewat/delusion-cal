@@ -52,6 +52,8 @@ drink_ratio = 0.28
 pet_ratio = 0.49
 male_vrigin = 14.3
 female_virgin = 12.3
+use_tiktok = 0.636
+
 # Data for the new input choice
 meet_options = {
     'Online': 0.39,
@@ -115,11 +117,11 @@ with col2:
     meet_choice = st.selectbox("How do you expect to meet?", list(meet_options.keys()), index=len(meet_options)-1)
     mbti = st.selectbox("MBTI Type", list(mbti_types.keys()), index=len(mbti_types)-1)
     religion = st.selectbox("Prefered Religion", list(religion_options.keys()), index=len(religion_options)-1)
+    tiktok = st.radio("Have Tiktok Account", ['Yes', 'No', 'Any'], index=2)
     exercise = st.radio("Exercise regularly", ['Yes', 'No', 'Any'], index=2)
     overweight = st.radio("Overweight or not", ['Yes', 'No', 'Any'], index=2)
     
     
-# Button
 # Button
 if st.button('Calculate'):
     # Calculate based on inputs
@@ -138,6 +140,7 @@ if st.button('Calculate'):
     smoke_mult = smoke_ratio if smoke == 'Yes' else (1 - smoke_ratio if smoke == 'No' else 1)
     drink_mult = drink_ratio if drink == 'Yes' else (1 - drink_ratio if drink == 'No' else 1)
     pet_mult = pet_ratio if pet == 'Yes' else (1 - pet_ratio if pet == 'No' else 1)
+    tiktok_mult = use_tiktok if tiktok == 'Yes' else (1 - use_tiktok if tiktok == 'No' else 1)
     meet_prob = meet_options[meet_choice]
     mbti_mult = mbti_types[mbti]
     religion_mult = religion_options[religion]
@@ -152,7 +155,7 @@ if st.button('Calculate'):
         virgin_prob = 1
 
     # Combine all factors
-    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob * mbti_mult * religion_mult
+    probability = age_prob * height_prob * education_level * income_bracket * exercise_mult * overweight_mult * car_mult * smoke_mult * drink_mult * pet_mult * virgin_prob * meet_prob * mbti_mult * religion_mult * tiktok_mult
 
     # Calculate the number of people this represents
     num_people = population * probability
