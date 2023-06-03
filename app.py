@@ -47,7 +47,7 @@ pet_ratio = 0.49
 
 # Begin Streamlit
 st.title("Dream Partner Probability Calculator")
-st.subheader("aka Delusion Calculator (TH Edition)")
+st.caption("aka Delusion Calculator (TH Edition)")
 
 # Layout columns
 col1, col2 = st.columns(2)
