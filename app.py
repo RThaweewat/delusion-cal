@@ -1,7 +1,30 @@
 import streamlit as st
 import numpy as np
 import scipy.stats as stats
+import matplotlib.pyplot as plt
 
+def make_plot(probability):
+    grid = np.zeros((10, 10))
+    num_red_boxes = round(probability * 100)  # Calculate number of red boxes
+    red_boxes_indices = np.random.choice(100, num_red_boxes, replace=False)  # Randomly select indices for red boxes
+
+    # Change the color of selected boxes to red
+    for index in red_boxes_indices:
+        row = index // 10
+        col = index % 10
+        grid[row][col] = 1
+
+    # Create a color map: 0 for white boxes and 1 for red boxes
+    cmap = plt.cm.colors.ListedColormap(['white', 'red'])
+    plt.imshow(grid, cmap=cmap)
+
+    # Hide the grid lines
+    plt.grid(False)
+
+    # Hide the axes
+    plt.axis('off')
+
+    plt.show()
 
 # Define the options
 age_groups = {
@@ -68,4 +91,8 @@ else:
 probability = p_age * p_education * p_income * p_exercise * p_body_weight * p_height
 
 # Display the probability
-st.write('Probability:', probability)
+st.write('Probability:', round(probability, 2))
+
+# Call the function with the calculated probability
+make_plot(probability)
+st.pyplot()
